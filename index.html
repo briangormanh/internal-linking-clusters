@@ -38,7 +38,7 @@ p{margin:0}
 .hero .lede{margin-top:22px;max-width:62ch;font-size:19px;color:var(--muted)}
 
 /* ---------- signature: the site map that sorts itself ---------- */
-.map-card{margin:36px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 24px 22px;box-shadow:0 1px 0 var(--line),0 18px 40px -28px rgba(42,35,32,.35)}
+.map-card{margin:36px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px 22px 14px;box-shadow:0 1px 0 var(--line),0 18px 40px -28px rgba(42,35,32,.35)}
 .controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .play{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;background:var(--orange);color:#fff;font:700 15px Sora,sans-serif;padding:10px 18px 10px 14px;cursor:pointer;box-shadow:0 6px 16px -8px rgba(217,84,31,.7);transition:background .2s,transform .1s}
 .play:hover{background:var(--orange-deep)}
@@ -50,11 +50,12 @@ p{margin:0}
 .steps button[aria-pressed="true"]{background:var(--charcoal);border-color:var(--charcoal);color:#fff}
 .steps button[aria-pressed="true"] b{background:var(--orange);color:#fff}
 .steps button.done b{background:#FCE0D2;color:var(--orange-deep)}
-.caption{margin-top:16px;min-height:58px;display:grid;gap:3px}
-.caption h2{font-size:21px;font-weight:700}
-.caption p{color:var(--muted);font-size:16px;max-width:75ch}
+.caption{margin-top:12px;min-height:54px;display:grid;gap:2px}
+.caption h2{font-size:20px;font-weight:700}
+.caption p{color:var(--muted);font-size:15.5px;line-height:1.45;max-width:90ch}
 .map-scroll{overflow-x:auto;margin:6px -10px 0;padding:0 10px}
-.map-scroll svg{display:block;width:100%;min-width:760px;height:auto}
+/* fit the whole card (controls + caption + map) in one screen; the map scales down, never below readable */
+.map-scroll svg{display:block;width:100%;min-width:760px;height:auto;max-height:max(400px,calc(100vh - 210px));max-height:max(400px,calc(100svh - 210px))}
 .n-text{font:700 13px Mulish,sans-serif;fill:var(--ink)}
 .n-money .n-text{font-size:15px;font-family:Sora,sans-serif}
 .n-tag{font:700 10px 'Space Mono',monospace;letter-spacing:.12em}
