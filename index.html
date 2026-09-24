@@ -54,8 +54,9 @@ p{margin:0}
 .caption h2{font-size:20px;font-weight:700}
 .caption p{color:var(--muted);font-size:15.5px;line-height:1.45;max-width:90ch}
 .map-scroll{overflow-x:auto;margin:6px -10px 0;padding:0 10px}
-/* fit the whole card (controls + caption + map) in one screen; the map scales down, never below readable */
-.map-scroll svg{display:block;width:100%;min-width:760px;height:auto;max-height:max(400px,calc(100vh - 210px));max-height:max(400px,calc(100svh - 210px))}
+/* map height = halfway between its natural size (58.04% of its width, from the 1120x650 viewBox) and a full-screen fit */
+.map-scroll{container-type:inline-size}
+.map-scroll svg{display:block;width:100%;min-width:760px;height:auto;max-height:max(400px,calc((100vh - 210px + 58.04cqw) / 2));max-height:max(400px,calc((100svh - 210px + 58.04cqw) / 2))}
 .n-text{font:700 13px Mulish,sans-serif;fill:var(--ink)}
 .n-money .n-text{font-size:15px;font-family:Sora,sans-serif}
 .n-tag{font:700 10px 'Space Mono',monospace;letter-spacing:.12em}
