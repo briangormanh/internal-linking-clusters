@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Internal Linking by Group</title>
+<meta name="description" content="How we plan internal links for clients: group like pages by relevance, pick a money page, and point support pages at it with varied, on-topic anchors.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Mulish:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --cream:#FAF4EC; --cream-2:#F2E6D5; --paper:#FFFDF9; --line:#EAD9C5;
+  --ink:#2A2320; --muted:#6B5F57; --charcoal:#322F30;
+  --orange:#EC6A34; --orange-deep:#D9541F; --red:#E23B2E; --green:#3FA66A;
+  --slate:#6F8387; --bronze:#A07A55;
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:400 17px/1.6 Mulish,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:Sora,sans-serif;line-height:1.12;margin:0;letter-spacing:-.02em}
+p{margin:0}
+.eyebrow{font:700 12px/1 'Space Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-deep)}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic .f{fill:currentColor;stroke:none}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:6px}
+
+.bar{display:flex;align-items:center;gap:12px;padding:22px 0}
+.mark{width:34px;height:34px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font:800 13px/1 Sora,sans-serif}
+.bar span{font:700 12px/1.3 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+.hero{padding:36px 0 10px}
+.hero h1{font-size:clamp(36px,6vw,70px);font-weight:800;max-width:16ch;margin-top:16px}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero .lede{margin-top:22px;max-width:62ch;font-size:19px;color:var(--muted)}
+
+/* ---------- signature: the site map that sorts itself ---------- */
+.map-card{margin:36px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 24px 22px;box-shadow:0 1px 0 var(--line),0 18px 40px -28px rgba(42,35,32,.35)}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.play{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;background:var(--orange);color:#fff;font:700 15px Sora,sans-serif;padding:10px 18px 10px 14px;cursor:pointer;box-shadow:0 6px 16px -8px rgba(217,84,31,.7);transition:background .2s,transform .1s}
+.play:hover{background:var(--orange-deep)}
+.play:active{transform:scale(.97)}
+.play .ic{width:18px;height:18px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.steps button{border:1px solid var(--line);background:var(--cream);color:var(--muted);font:700 13px Mulish,sans-serif;border-radius:999px;padding:8px 13px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;transition:background .2s,color .2s,border-color .2s}
+.steps button b{font:700 11px 'Space Mono',monospace;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--cream-2);color:var(--muted)}
+.steps button[aria-pressed="true"]{background:var(--charcoal);border-color:var(--charcoal);color:#fff}
+.steps button[aria-pressed="true"] b{background:var(--orange);color:#fff}
+.steps button.done b{background:#FCE0D2;color:var(--orange-deep)}
+.caption{margin-top:16px;min-height:58px;display:grid;gap:3px}
+.caption h2{font-size:21px;font-weight:700}
+.caption p{color:var(--muted);font-size:16px;max-width:75ch}
+.map-scroll{overflow-x:auto;margin:6px -10px 0;padding:0 10px}
+.map-scroll svg{display:block;width:100%;min-width:760px;height:auto}
+.n-text{font:700 13px Mulish,sans-serif;fill:var(--ink)}
+.n-money .n-text{font-size:15px;font-family:Sora,sans-serif}
+.n-tag{font:700 10px 'Space Mono',monospace;letter-spacing:.12em}
+.h-label{font:700 11px 'Space Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.a-text{font:800 12.5px Mulish,sans-serif;fill:var(--orange-deep)}
+.fade{transition:opacity .6s ease}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.draw.on{stroke-dashoffset:0}
+noscript p{padding:20px;background:var(--cream);border-radius:12px;margin-top:12px}
+
+/* ---------- sections ---------- */
+section{padding:84px 0 0}
+.sec-head{display:grid;gap:14px;max-width:720px;margin-bottom:30px}
+.sec-head h2{font-size:clamp(28px,3.8vw,42px);font-weight:700}
+.sec-head p{color:var(--muted);font-size:18px}
+
+.anchors{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:16px}
+.ap{border-radius:14px;padding:20px;border:1px solid var(--line);background:var(--paper)}
+.ap .top{display:flex;align-items:center;gap:9px;font:700 12px 'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.ap h3{font-size:18px;margin-bottom:12px}
+.ap p{font-size:15px;color:var(--muted);margin-top:14px}
+.ap.bad .top{color:var(--red)}
+.ap.good{border:2px solid var(--orange);background:#FFF8F2}
+.ap.good .top{color:var(--orange-deep)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font:700 13.5px Mulish,sans-serif;padding:6px 11px;border-radius:999px;background:var(--cream-2);color:var(--muted)}
+.bad .chip{text-decoration:line-through;text-decoration-color:rgba(226,59,46,.55);text-decoration-thickness:2px}
+.good .chip{background:#FFE7DA;color:var(--orange-deep)}
+
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.rule{display:flex;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px}
+.rule .ico{flex:none;width:40px;height:40px;border-radius:12px;background:#FFE7DA;color:var(--orange-deep);display:grid;place-items:center}
+.rule h3{font-size:17px;margin-bottom:4px}
+.rule p{font-size:15.5px;color:var(--muted)}
+
+.foot{padding:70px 0 60px;color:var(--muted);font-size:14px}
+.foot .fine{font:400 12px/1.6 'Space Mono',monospace;margin-top:6px}
+
+@media (max-width:900px){ .anchors{grid-template-columns:1fr} }
+@media (max-width:720px){
+  .wrap{padding:0 16px}
+  .rules{grid-template-columns:1fr}
+  .map-card{padding:16px 14px}
+  .steps button span{display:none}
+  section{padding-top:64px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fade,.draw{transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path class="f" d="M8 5.5v13l10.5-6.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12" stroke-width="3"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16 9.6"/></symbol>
+  <symbol id="i-group" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4" stroke-dasharray="3 2.4"/><circle cx="9" cy="10" r="2"/><circle cx="15" cy="9" r="2"/><circle cx="12" cy="15" r="2"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h14M13 6.5l5.5 5.5-5.5 5.5"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4.5h8l9 9-8 8z"/><circle cx="8" cy="9" r="1.4"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="bar">
+    <div class="mark" aria-hidden="true">6C</div>
+    <span>Sixth City Marketing · Internal linking</span>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">How we plan internal links for clients</p>
+    <h1>Every link should push toward <em>a money page.</em></h1>
+    <p class="lede">Group like pages by relevance. Pick the page in each group that makes money. Then point the rest of the group at it, using anchors that describe what it's about.</p>
+
+    <div class="map-card" id="map">
+      <div class="controls">
+        <button type="button" class="play" id="play" aria-label="Play the steps"><svg class="ic" aria-hidden="true"><use id="playIcon" href="#i-play"/></svg><span id="playTxt">Play</span></button>
+        <ul class="steps" id="steps">
+          <li><button type="button" data-s="1" aria-pressed="true"><b>1</b><span>Typical site</span></button></li>
+          <li><button type="button" data-s="2" aria-pressed="false"><b>2</b><span>Group</span></button></li>
+          <li><button type="button" data-s="3" aria-pressed="false"><b>3</b><span>Money page</span></button></li>
+          <li><button type="button" data-s="4" aria-pressed="false"><b>4</b><span>Support pages</span></button></li>
+          <li><button type="button" data-s="5" aria-pressed="false"><b>5</b><span>Link it</span></button></li>
+        </ul>
+      </div>
+      <div class="caption" aria-live="polite">
+        <h2 id="capT">A typical site</h2>
+        <p id="capP">Pages link wherever someone happened to add a link. Nothing points anywhere on purpose.</p>
+      </div>
+      <div class="map-scroll">
+        <svg id="svg" viewBox="0 0 1120 650" role="img" aria-labelledby="map-t map-d">
+          <title id="map-t">A roofing site's pages sorted into groups, with support pages linking to each money page</title>
+          <desc id="map-d">A roofing company's pages start scattered with random links. They sort into three groups: roof replacement, gutters, and siding. Each group has one money page. The support pages in each group link to it. In the roof replacement group, the six links use anchors like roof replacement, replace your roof, full roof replacement, new roof installation, replacing an aging roof, and reroofing your home.</desc>
+          <defs>
+            <filter id="lift" x="-20%" y="-40%" width="140%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#2A2320" flood-opacity=".14"/></filter>
+          </defs>
+          <g id="halos"></g>
+          <g id="mess"></g>
+          <g id="links"></g>
+          <g id="nodes"></g>
+          <g id="pills"></g>
+        </svg>
+      </div>
+      <noscript><p>This diagram needs JavaScript. In short: group like pages, pick one money page per group, and link every support page to it with varied, on-topic anchors.</p></noscript>
+    </div>
+  </div>
+
+  <section id="anchors">
+    <div class="sec-head">
+      <p class="eyebrow">Anchor text</p>
+      <h2>Anchors should model the money page's topic</h2>
+      <p>The anchor is the clickable text. It tells search engines and readers what the linked page is about, so it should describe the money page, in slightly different words each time.</p>
+    </div>
+    <div class="anchors">
+      <div class="ap bad">
+        <div class="top"><svg class="ic"><use href="#i-x"/></svg>Says nothing</div>
+        <h3>Generic anchors</h3>
+        <div class="chips"><span class="chip">click here</span><span class="chip">learn more</span><span class="chip">read more</span><span class="chip">this page</span></div>
+        <p>Nothing here says the page is about roof replacement.</p>
+      </div>
+      <div class="ap bad">
+        <div class="top"><svg class="ic"><use href="#i-x"/></svg>No variety</div>
+        <h3>The same words every time</h3>
+        <div class="chips"><span class="chip">roof replacement</span><span class="chip">roof replacement</span><span class="chip">roof replacement</span><span class="chip">roof replacement</span><span class="chip">roof replacement</span><span class="chip">roof replacement</span></div>
+        <p>Looks manufactured, and misses every other way people describe the topic.</p>
+      </div>
+      <div class="ap good">
+        <div class="top"><svg class="ic"><use href="#i-check"/></svg>How we do it</div>
+        <h3>On topic, with variety</h3>
+        <div class="chips"><span class="chip">roof replacement</span><span class="chip">replace your roof</span><span class="chip">full roof replacement</span><span class="chip">new roof installation</span><span class="chip">replacing an aging roof</span><span class="chip">reroofing your home</span></div>
+        <p>Every anchor is clearly about roof replacement, and no two are the same.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="sec-head">
+      <p class="eyebrow">The checklist</p>
+      <h2>Four rules for every client</h2>
+    </div>
+    <div class="rules">
+      <div class="rule"><div class="ico"><svg class="ic"><use href="#i-group"/></svg></div><div><h3>Group like pages by relevance</h3><p>Sort by topic first. A page belongs in a group if it's about the same thing that group's searcher wants.</p></div></div>
+      <div class="rule"><div class="ico"><svg class="ic"><use href="#i-target"/></svg></div><div><h3>Choose one money page per group</h3><p>The page that turns visitors into leads or sales. Usually a service or product page.</p></div></div>
+      <div class="rule"><div class="ico"><svg class="ic"><use href="#i-arrow"/></svg></div><div><h3>Point support pages at it</h3><p>Blog posts, guides, cost pages, and project pages in the group each link to the money page.</p></div></div>
+      <div class="rule"><div class="ico"><svg class="ic"><use href="#i-tag"/></svg></div><div><h3>Target the anchors, then vary them</h3><p>Every anchor describes the money page's topic. No two are identical, and none say "click here."</p></div></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Sixth City Marketing · since 2010</p>
+    <p class="fine">Example uses a generic roofing site.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+  var C = {roof:'#EC6A34', gut:'#6F8387', sid:'#A07A55', util:'#9A8C80'};
+  var el = function(tag, a, parent){ var e = document.createElementNS(NS, tag); for (var k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; };
+  var $ = function(id){ return document.getElementById(id); };
+
+  // Pages. g = group, role = money | support | util, [cx,cy] = grouped position.
+  var R = 205, RC = [340, 370];
+  var ang = function(d){ return [RC[0] + R*Math.cos(d*Math.PI/180), RC[1] + R*Math.sin(d*Math.PI/180)]; };
+  var P = [
+    {t:'Home', g:'util', role:'util', p:[95,42]},
+    {t:'About us', g:'util', role:'util', p:[205,42]},
+    {t:'Contact', g:'util', role:'util', p:[310,42]},
+    {t:'Roof replacement', g:'roof', role:'money', p:RC},
+    {t:'How long do roofs last?', g:'roof', role:'support', p:ang(-90), a:'roof replacement'},
+    {t:'Signs you need a new roof', g:'roof', role:'support', p:ang(-30), a:'replace your roof'},
+    {t:'Roof cost in [city]', g:'roof', role:'support', p:ang(30), a:'full roof replacement'},
+    {t:'Project: Oak St. re-roof', g:'roof', role:'support', p:ang(90), a:'new roof installation'},
+    {t:'Asphalt vs. metal roofs', g:'roof', role:'support', p:ang(150), a:'replacing an aging roof'},
+    {t:'Repair or replace?', g:'roof', role:'support', p:ang(210), a:'reroofing your home'},
+    {t:'Gutter installation', g:'gut', role:'money', p:[890,195]},
+    {t:'Cleaning your gutters', g:'gut', role:'support', p:[890,102]},
+    {t:'Gutter guards: worth it?', g:'gut', role:'support', p:[795,282]},
+    {t:'Gutter repair cost', g:'gut', role:'support', p:[985,282]},
+    {t:'Siding replacement', g:'sid', role:'money', p:[890,495]},
+    {t:'Signs of siding rot', g:'sid', role:'support', p:[795,410]},
+    {t:'Vinyl vs. fiber cement', g:'sid', role:'support', p:[985,410]},
+    {t:'Siding project: Elm Ave.', g:'sid', role:'support', p:[890,592]}
+  ];
+  // Scattered positions: a jittered 5x4 grid, pages dealt out of order so groups are mixed.
+  var cols = [118, 335, 560, 785, 1002], rows = [60, 225, 400, 575];
+  var deal = [7,0,12,4,16, 2,9,14,5,11, 1,17,6,10,3, 15,8,13];
+  var jit = [[10,-8],[-14,12],[18,6],[-6,-14],[12,16],[-18,4],[8,-10],[-10,14],[16,-6],[-12,-12],[6,10],[-16,-4],[14,12],[-8,8],[10,-14],[-4,6],[12,-4],[-14,10]];
+  deal.forEach(function(pi, cell){
+    var c = cell % 5, r = Math.floor(cell / 5);
+    P[pi].s = [cols[c] + jit[cell][0], rows[r] + jit[cell][1]];
+  });
+  var mess = [[0,5],[1,12],[2,8],[3,16],[4,11],[6,14],[7,0],[9,13],[10,5],[15,3],[17,6],[12,8],[1,9],[4,14],[11,16],[13,2]];
+
+  // ---------- build nodes ----------
+  var nodesG = $('nodes');
+  P.forEach(function(n){
+    n.w = n.role === 'money' ? n.t.length*8.6 + 44 : n.t.length*7.1 + 28;
+    n.h = n.role === 'money' ? 50 : 34;
+    n.el = el('g', {'class': 'node' + (n.role === 'money' ? ' n-money' : '')}, nodesG);
+    n.box = el('rect', {x:-n.w/2, y:-n.h/2, width:n.w, height:n.h, rx:n.role === 'money' ? 12 : 9, fill:'#FFFDF9', stroke:'#EAD9C5', 'stroke-width':1.5}, n.el);
+    n.txt = el('text', {'class':'n-text', 'text-anchor':'middle', y:n.role === 'money' ? 5 : 4.5}, n.el);
+    n.txt.textContent = n.t;
+    if (n.role === 'money'){
+      n.tag = el('text', {'class':'n-tag fade', 'text-anchor':'middle', y:-n.h/2 - 9, fill:C[n.g], opacity:0}, n.el);
+      n.tag.textContent = 'MONEY PAGE';
+    }
+    n.cur = n.s.slice();
+  });
+
+  // halos
+  var halosG = $('halos');
+  var H = [
+    {g:'roof', x:40, y:108, w:600, h:530, label:'Roof replacement group'},
+    {g:'gut', x:684, y:52, w:412, h:278, label:'Gutters group'},
+    {g:'sid', x:684, y:356, w:412, h:284, label:'Siding group'}
+  ];
+  H.forEach(function(h){
+    h.el = el('g', {'class':'fade', opacity:0}, halosG);
+    el('rect', {x:h.x, y:h.y, width:h.w, height:h.h, rx:34, fill:C[h.g], 'fill-opacity':.06, stroke:C[h.g], 'stroke-opacity':.5, 'stroke-width':1.5, 'stroke-dasharray':'6 6'}, h.el);
+    var t = el('text', {'class':'h-label', x:h.x + 24, y:h.y + 28, fill:C[h.g]}, h.el); t.textContent = h.label;
+  });
+  var utilLabel = el('text', {'class':'h-label fade', x:380, y:47, fill:C.util, opacity:0}, halosG);
+  utilLabel.textContent = 'Utility pages · no group';
+
+  // random links
+  var messG = $('mess');
+  mess.forEach(function(m){ m.el = el('line', {stroke:'#B9AA9C', 'stroke-width':1.4, 'stroke-opacity':.7}, messG); });
+
+  // support -> money links, with anchor pills in the roof group
+  var linksG = $('links'), pillsG = $('pills');
+  var money = {}; P.forEach(function(n){ if (n.role === 'money') money[n.g] = n; });
+  function edge(n, dx, dy){ var t = Math.min((n.w/2 + 6)/Math.abs(dx || 1e-6), (n.h/2 + 6)/Math.abs(dy || 1e-6)); return [n.p[0] + dx*t, n.p[1] + dy*t]; }
+  var L = [];
+  P.forEach(function(n){
+    if (n.role !== 'support') return;
+    var m = money[n.g], dx = m.p[0] - n.p[0], dy = m.p[1] - n.p[1];
+    var a = edge(n, dx, dy), b = edge(m, -dx, -dy);
+    var len = Math.hypot(b[0]-a[0], b[1]-a[1]), ux = (b[0]-a[0])/len, uy = (b[1]-a[1])/len;
+    var col = C[n.g], main = n.g === 'roof';
+    var line = el('path', {d:'M'+a[0]+' '+a[1]+' L'+(b[0]-ux*8)+' '+(b[1]-uy*8), stroke:col, 'stroke-width':main ? 2.6 : 2, fill:'none', pathLength:1, 'class':'draw', 'stroke-opacity':main ? 1 : .75}, linksG);
+    var hx = b[0], hy = b[1], px = -uy, py = ux;
+    var head = el('path', {d:'M'+hx+' '+hy+' L'+(hx-ux*11+px*6)+' '+(hy-uy*11+py*6)+' L'+(hx-ux*11-px*6)+' '+(hy-uy*11-py*6)+'Z', fill:col, 'class':'fade', opacity:0, 'fill-opacity':main ? 1 : .75}, linksG);
+    var link = {line:line, head:head};
+    if (main){
+      // pill sits along the link, 60% of the way from the money page toward the support page
+      var cx = m.p[0] + (n.p[0]-m.p[0])*.62, cy = m.p[1] + (n.p[1]-m.p[1])*.62;
+      var pw = n.a.length*6.9 + 22;
+      var g = el('g', {'class':'fade', opacity:0, transform:'translate('+cx+' '+cy+')'}, pillsG);
+      el('rect', {x:-pw/2, y:-13, width:pw, height:26, rx:13, fill:'#FFF1E8', stroke:'#EC6A34', 'stroke-width':1.3, filter:'url(#lift)'}, g);
+      var t = el('text', {'class':'a-text', 'text-anchor':'middle', y:4.5}, g); t.textContent = n.a;
+      link.pill = g;
+    }
+    L.push(link);
+  });
+
+  // ---------- rendering ----------
+  function place(){
+    P.forEach(function(n){ n.el.setAttribute('transform', 'translate('+n.cur[0]+' '+n.cur[1]+')'); });
+    mess.forEach(function(m){
+      var a = P[m[0]].cur, b = P[m[1]].cur;
+      m.el.setAttribute('x1', a[0]); m.el.setAttribute('y1', a[1]); m.el.setAttribute('x2', b[0]); m.el.setAttribute('y2', b[1]);
+    });
+  }
+  var raf = null;
+  function moveTo(key, ms){
+    cancelAnimationFrame(raf);
+    var from = P.map(function(n){ return n.cur.slice(); });
+    if (reduce || ms === 0){ P.forEach(function(n){ n.cur = n[key].slice(); }); place(); return; }
+    var t0 = performance.now();
+    (function step(t){
+      var q = Math.min(1, (t - t0)/ms), e = q < .5 ? 4*q*q*q : 1 - Math.pow(-2*q + 2, 3)/2;
+      P.forEach(function(n, i){ n.cur = [from[i][0] + (n[key][0]-from[i][0])*e, from[i][1] + (n[key][1]-from[i][1])*e]; });
+      place();
+      if (q < 1) raf = requestAnimationFrame(step);
+    })(t0);
+  }
+
+  var CAP = [
+    ['A typical site', 'Pages link wherever someone happened to add a link. Nothing points anywhere on purpose.'],
+    ['Group like pages by relevance', 'Sort every page into a group by topic. Pages that aren\'t about a service, like About and Contact, stay out.'],
+    ['Pick the money page', 'Each group gets one money page: the page that turns visitors into leads.'],
+    ['Find the support pages', 'Everything else in the group supports it: blog posts, guides, cost pages, and project pages.'],
+    ['Point support pages at the money page', 'Each support page links to the money page. Every anchor describes roof replacement, and no two are the same.']
+  ];
+  var stage = 0;
+  function show(s){
+    var prev = stage; stage = s;
+    $('capT').textContent = CAP[s-1][0]; $('capP').textContent = CAP[s-1][1];
+    document.querySelectorAll('#steps button').forEach(function(b){
+      var k = +b.dataset.s; b.setAttribute('aria-pressed', k === s ? 'true' : 'false'); b.classList.toggle('done', k < s);
+    });
+    if ((s === 1) !== (prev === 1) || prev === 0) moveTo(s === 1 ? 's' : 'p', prev === 0 ? 0 : 1100);
+    messG.style.transition = reduce ? 'none' : 'opacity .5s ease';
+    messG.style.opacity = s === 1 ? 1 : 0;
+    H.forEach(function(h){ h.el.setAttribute('opacity', s >= 2 ? 1 : 0); });
+    utilLabel.setAttribute('opacity', s >= 2 ? 1 : 0);
+    P.forEach(function(n){
+      var col = C[n.g], fill = '#FFFDF9', stroke = '#EAD9C5', sw = 1.5, txt = '#2A2320', dash = '', op = 1;
+      if (s >= 2 && n.role === 'util'){ stroke = '#C9BBAE'; dash = '4 4'; txt = '#8A7D72'; }
+      if (s >= 3 && n.role === 'money'){ fill = col; stroke = col; txt = '#fff'; }
+      if (s >= 4 && n.role === 'support'){ stroke = col; sw = 2.2; }
+      n.box.setAttribute('fill', fill); n.box.setAttribute('stroke', stroke); n.box.setAttribute('stroke-width', sw);
+      if (dash) n.box.setAttribute('stroke-dasharray', dash); else n.box.removeAttribute('stroke-dasharray');
+      n.box.setAttribute('filter', s >= 3 && n.role === 'money' ? 'url(#lift)' : '');
+      n.txt.style.fill = txt;
+      if (n.tag) n.tag.setAttribute('opacity', s >= 3 && s < 5 ? 1 : 0);
+    });
+    L.forEach(function(l, i){
+      var on = s >= 5, d = reduce ? 0 : i * 90;
+      l.line.style.transitionDelay = on ? d + 'ms' : '0ms';
+      l.line.classList.toggle('on', on);
+      l.head.style.transitionDelay = on ? (d + 700) + 'ms' : '0ms';
+      l.head.setAttribute('opacity', on ? 1 : 0);
+      if (l.pill){ l.pill.style.transitionDelay = on ? (d + 800) + 'ms' : '0ms'; l.pill.setAttribute('opacity', on ? 1 : 0); }
+    });
+  }
+
+  // ---------- controls ----------
+  var timer = null, btn = $('play');
+  function setBtn(state){
+    $('playIcon').setAttribute('href', '#i-' + state);
+    $('playTxt').textContent = state === 'play' ? 'Play' : state === 'pause' ? 'Pause' : 'Replay';
+    btn.setAttribute('aria-label', $('playTxt').textContent + ' the steps');
+  }
+  function stop(){ clearInterval(timer); timer = null; setBtn(stage === 5 ? 'replay' : 'play'); }
+  function play(){
+    if (stage === 5) show(1);
+    setBtn('pause');
+    timer = setInterval(function(){ if (stage < 5) show(stage + 1); if (stage === 5) stop(); }, 2600);
+  }
+  btn.addEventListener('click', function(){ timer ? stop() : play(); });
+  document.querySelectorAll('#steps button').forEach(function(b){
+    b.addEventListener('click', function(){ if (timer) stop(); show(+b.dataset.s); setBtn(stage === 5 ? 'replay' : 'play'); });
+  });
+
+  show(1);
+})();
+</script>
+</body>
+</html>
